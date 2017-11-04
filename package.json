@@ -1,0 +1,26 @@
+{
+  "name": "altran-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cnavas88/Test-Altran-backend.git"
+  },
+  "author": "Carlos Navas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cnavas88/Test-Altran-backend/issues"
+  },
+  "homepage": "https://github.com/cnavas88/Test-Altran-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.5.1",
+    "express": "^4.16.2",
+    "mysql": "^2.5.5",
+    "sequelize": "~2.0.0",
+    "sequelize-cli": "^3.0.0"
+  }
+}
