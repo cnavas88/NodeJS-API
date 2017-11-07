@@ -8,22 +8,36 @@ exports.findPoliciesByName = (req, res) =>
     {
         if (err)
         {
-            res.json({
-                "error": "Policy not found"
+            res.status(404).json({
+                success: false,
+                message: err
             });
         }else
         {
             res.json({
-                "data": policies
+                success: true,
+                data: policies
             });
         }        
     });
 };
 
-exports.findClientsByPolice = (req, res) => {
-
-    res.json({
-        "message": "RETURN CLIENT ACCORDING POLICY NUMBER"
-    });    
-
+exports.findClientsByPoliceId = (req, res) => 
+{
+    PoliciesService.getClientByPoliceId(req.params.policyId, (client, err) => 
+    {
+        if (err)
+        {
+            res.status(404).json({
+                success: false,
+                message: err
+            });
+        }else
+        {
+            res.json({
+                success: true,
+                data: client
+            });
+        }        
+    });
 };

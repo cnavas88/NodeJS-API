@@ -13,14 +13,14 @@ function loadPolicies(next)
         encoding: null
     };
 
-    Call.callToService(options, null, (policies, err) => {
+    Call.callToService(options, null, (data, err) => {
 
         if (err)
         {
             next(null, err);
         }else
         {
-            next(policies, null);
+            next(data.policies, null);
         }
 
     });
@@ -30,7 +30,47 @@ exports.getPolicyByUserName = (name, next) =>
 {    
     loadPolicies( (policies, err) => 
     {
-        var thisPolicies = null;
+        if (err)
+        {
+            next(null, err);
+        }else
+        {
+            ClientService.getClientByName(name, (client, err) => {
+
+                var thisPolicies = [];
+
+                if (err)
+                {
+                    next(null, err);
+                } else
+                {
+                    policies.forEach((policy, index, arr) => 
+                    {
+                        if (policy.clientId == client.id)
+                        {
+                            thisPolicies.push(policy);
+                        }
+                    });
+                }
+
+                if (thisPolicies.length > 0)
+                {
+                    next(thisPolicies, null);
+                }else
+                {
+                    next(null, 'This name not have associate policies.');
+                }
+
+            });
+        }
+    });
+}
+
+exports.getClientByPoliceId = (policyId, next) => 
+{   
+    loadPolicies( (policies, err) => 
+    {
+        var thisPolicy = null;
 
         if (err)
         {
@@ -39,19 +79,29 @@ exports.getPolicyByUserName = (name, next) =>
         {
             policies.forEach((policy, index, arr) => 
             {
-                if (policy.clientId == clientId)
+                if (policy.id == policyId)
                 {
-                    thisPolicies += policy;
+                    thisPolicy = policy;
                 }
             });
-        }
 
-        if (thisPolicies)
-        {
-            next(thisPolicies, null);
-        }else
-        {
-            next(null, 'Policy not found.');
+            if (thisPolicy == null)
+            {
+                next(null, 'Policy not found.')
+            }
+            else
+            {
+                ClientService.getClientById(thisPolicy.clientId, (client, err) => 
+                {
+                    if (err)
+                    {
+                        next(null, err);
+                    } else
+                    {
+                        next(client, null);
+                    }
+                });
+            }
         }
     });
 }

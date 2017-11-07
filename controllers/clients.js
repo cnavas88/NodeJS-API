@@ -8,13 +8,15 @@ exports.findClientsById = (req, res) =>
     {
         if (err)
         {
-            res.json({
-                "error": "Client not found"
+            res.status(404).json({
+                success: false,
+                message: err
             });
         }else
         {
             res.json({
-                "data": client
+                success: true,
+                data: client                
             });
         }        
     });
@@ -26,13 +28,15 @@ exports.findClientsByName = (req, res) =>
     {
         if (err)
         {
-            res.json({
-                "error": "Client not found"
+            res.status(404).json({
+                success: false,
+                message: err
             });
         }else
         {
             res.json({
-                "data": client
+                success: true,
+                data: client
             });
         }        
     });
