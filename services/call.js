@@ -26,15 +26,14 @@ exports.callToService = (options, jsonObject, next) =>
         })
         .on('error', (err) => 
         {
-            console.error('Error al procesar el mensaje: ' + err)
+            next(null, err);
         })
         .on('uncaughtException', function (err) 
         {
-            console.error(err);
+            next(null, err);
         });
     }).on('error', (err) => 
     {
-        console.error('HTTP request failed: ' + err);
         next(null, err);
     });
  
