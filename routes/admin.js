@@ -1,26 +1,13 @@
 'use strict';
 
 var express = require('express');
+var authMiddleware = require('../middleware/adminMiddleware');
 var admin_router = express.Router();
 //var PoliciesCtrl = require('../controllers/policies');
 
-function checkIsAdminRole(req, res, next)
-{
-    if (req.decoded.role == 'admin')
-    {
-        next();
-    } else 
-    {
-        res.status(403).json({
-            success: false,
-            message: 'Not authorization'
-        });
-    }
-}
-
 //PoliciesCtrl.findPoliciesByName
 
-admin_router.get('/clients/:name/policies', checkIsAdminRole, (req, res) => 
+admin_router.get('/clients/:name/policies', authMiddleware.checkIsAdmin, (req, res) => 
 {
     res.json({
         success: true,
@@ -30,7 +17,7 @@ admin_router.get('/clients/:name/policies', checkIsAdminRole, (req, res) =>
 
 //PoliciesCtrl.findClientsByPolice
 
-admin_router.get('/policies/:number/user', checkIsAdminRole, (req, res) =>
+admin_router.get('/policies/:number/user', authMiddleware.checkIsAdmin, (req, res) =>
 {
     res.json({
         success: true,
