@@ -5,13 +5,15 @@ var authenticationService = require('../services/authentication');
 
 exports.login = (req, res) => 
 {
-    ClientService.getClientByName(
-        req.body.name
+    var condition = {'name': req.body.name};
+
+    ClientService.showClient(
+        condition
     , (client, err) => {
 
         if (err)
         {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: err
             });
@@ -19,18 +21,25 @@ exports.login = (req, res) =>
 
         if (!client)
         {
-            res.status(422).json({
+            return res.status(422).json({
                 success: false,
                 message: 'Authentication failed. User not found.'
             });
-        } else if (client)
-        {
-            var token = authenticationService.generateToken(client.role);
+        } 
 
-            res.json({
-                success: true,
-                data: token
-            });
+        if (client.password != req.body.password) // TODO - CREAR EL COMPARE EN EL SERVICIO DEL PASSWORD
+        {
+            return res.status(401).json({
+                success: false,
+                message: 'Authetication failed. Wrong password.'
+            });            
         }
+
+        var token = authenticationService.generateToken(client.role);
+
+        return res.json({
+            success: true,
+            data: token
+        });
     });
 };

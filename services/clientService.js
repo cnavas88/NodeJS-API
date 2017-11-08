@@ -31,17 +31,17 @@ exports.insertClient = (client) =>
     });   
 };
 
-exports.showClient = (id_client, next) =>
+exports.showClient = (condition, next) =>
 {
-    Client.find({'_id': id_client}, (err, res) => 
+    Client.find(condition, (err, res) => 
     {
         if (res.length == 0)
         {
-            next(false);
+            next(null, false);
         }
         else
         {
-            next(true);
+            next(res, true);
         }
     });
 };
@@ -57,8 +57,6 @@ function generateError()
 
 exports.getClientById = (id, next) => 
 {    
-    loadClients( (clients, err) => 
-    {
         var thisClient = null;
 
         if (err)
@@ -82,13 +80,10 @@ exports.getClientById = (id, next) =>
         {
             next(null, generateError());
         }
-    });
 }
 
 exports.getClientByName = (name, next) => 
 {    
-    loadClients( (clients, err) => 
-    {
         var thisClient = null;
 
         if (err)
@@ -112,5 +107,4 @@ exports.getClientByName = (name, next) =>
         {
             next(null, generateError());
         }
-    });
 }*/

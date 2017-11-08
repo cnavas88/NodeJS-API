@@ -40,9 +40,9 @@ exports.start = () =>
         {
             clients.forEach((client, index, arr) => 
             {
-                clientService.showClient(client._id, (res) =>
+                clientService.showClient({'_id': client.id}, (data, exists) =>
                 {
-                    if (! res) clientService.insertClient(client);
+                    if (! exists) clientService.insertClient(client);
                 });
             });
         }
