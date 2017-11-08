@@ -3,7 +3,7 @@
 var express     = require('express'),
     bodyParser  = require('body-parser'),
     mongoose    = require('mongoose'),
-    inicialize  = require('./seeds/inicializeClients');
+    inicialize  = require('./seeds/index');
 
 var app         = express();
 

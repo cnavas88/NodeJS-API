@@ -25,7 +25,7 @@ exports.showPolicy = (id_policy, next) =>
 {
     Policy.find({'_id': id_policy}, (err, res) => 
     {
-        if (err)
+        if (res.length == 0)
         {
             next(false);
         }

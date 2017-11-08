@@ -35,7 +35,7 @@ exports.showClient = (id_client, next) =>
 {
     Client.find({'_id': id_client}, (err, res) => 
     {
-        if (err)
+        if (res.length == 0)
         {
             next(false);
         }

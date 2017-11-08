@@ -1,7 +1,7 @@
 'use strict';
 
 var Call              = require('../services/call'),
-    policiesService   = require('../services/policiesService');
+    policiesService   = require('../services/policieService');
 
 function inicializePolicies(next)
 {
@@ -40,9 +40,9 @@ exports.start = () =>
         {
             policies.forEach((policy, index, arr) => 
             {
-                policiesService.showClient(policy._id, (res) =>
+                policiesService.showPolicy(policy.id, (res) =>
                 {
-                    if (! res) policiesService.insertClient(policy);
+                    if (! res) policiesService.insertPolicy(policy);
                 });
             });
         }
