@@ -1,18 +1,30 @@
 'use strict';
 
-var express = require('express');
+var express             = require('express');
+var jwtAuthMiddleware   = require('../middleware/jwtAuthMiddleware');
 
 var app = express();
 
-var jwtAuthMiddleware = require('../middleware/jwtAuthMiddleware');
-var guest_routes = require('./guest');
-var auth_routes = require('./auth');
-var admin_routes = require('./admin');
-
 app.use( jwtAuthMiddleware.jwtAuth );
 
-app.use('/', guest_routes);
-app.use('/', auth_routes);
-app.use('/', admin_routes);
+app.use('/', require('./guest'));
+app.use('/', require('./auth'));
+app.use('/', require('./admin'));
+
+app.all('*', (req, res, next) => 
+{
+    var err = new Error();
+    err.status = 404;
+    err.message = 'Resource Not found';
+    next(err);
+});
+
+app.use( (err, req, res, next) => 
+{
+    res.status(err.status).json({
+        success: false,
+        message: err.message
+    });
+});
 
 module.exports = app;

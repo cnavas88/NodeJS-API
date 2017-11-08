@@ -10,7 +10,7 @@ jwtAuthMiddleware.jwtAuth = (req, res, next) =>
 
     if (req.path == '/')
     {
-        return next();
+        return next('route');
     }
 
     if (token)
@@ -31,7 +31,7 @@ jwtAuthMiddleware.jwtAuth = (req, res, next) =>
         if (decoded)
         {
             req.decoded = decoded;
-            return next();
+            return next('route');
         }
     } 
 

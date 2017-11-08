@@ -6,14 +6,18 @@ adminMiddleware.checkIsAdmin = (req, res, next) =>
 {
     if (req.decoded.role == 'admin')
     {
-        next();
-    } else 
-    {
-        res.status(403).json({
-            success: false,
-            message: 'Not authorization'
-        });
-    }
+        return next();
+    } 
+    
+    return next(generateError());
+}
+
+function generateError()
+{
+    var err = new Error();
+    err.status = 403;
+    err.message = 'Not authorization'
+    return err;    
 }
 
 module.exports = adminMiddleware;

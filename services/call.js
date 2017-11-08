@@ -13,7 +13,8 @@ exports.callToService = (options, jsonObject, next) =>
         res.on('data', (chunk) => 
         {
             data += chunk;
-        }).on('end', () => 
+        })
+        .on('end', () => 
         {
             var response = null;
  
@@ -23,15 +24,8 @@ exports.callToService = (options, jsonObject, next) =>
             }
 
             next(response, null);
-        })
-        .on('error', (err) => 
-        {
-            next(null, err);
-        })
-        .on('uncaughtException', function (err) 
-        {
-            next(null, err);
         });
+        
     }).on('error', (err) => 
     {
         next(null, err);

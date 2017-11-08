@@ -1,29 +1,59 @@
 'use strict';
 
-var Call = require('./call');
+require('../models/client');
 
-function loadClients(next) 
+var mongoose         = require('mongoose'),
+    hash             = require('./password'),
+    Client           = mongoose.model('client');
+
+mongoose.Promise     = require('bluebird');
+
+exports.insertClient = (client) =>
 {
-    var options = {
-        host: 'www.mocky.io',
-        port: '80',
-        path: '/v2/5808862710000087232b75ac',
-        method: 'GET',
-        encoding: null
-    };
-
-    Call.callToService(options, null, (data, err) => {
-
+    hash.generatePassword(client.name, (password, err) => 
+    {
         if (err)
         {
-            next(null, err);
-        }else
-        {
-            next(data.clients, null);
+            console.log(err);
         }
+        else
+        {
+            var new_client = new Client({
+                _id:        client.id,
+                name:       client.name,
+                email:      client.email,
+                password:   password,
+                role:       client.role
+            });           
 
+            new_client.save();     
+        }
+    });   
+};
+
+exports.showClient = (id_client, next) =>
+{
+    Client.find({'_id': id_client}, (err, res) => 
+    {
+        if (err)
+        {
+            next(false);
+        }
+        else
+        {
+            next(true);
+        }
     });
 };
+/*
+
+function generateError()
+{
+    var err = new Error();
+    err.status = 404;
+    err.message = 'Client not found.';
+    return err;    
+}
 
 exports.getClientById = (id, next) => 
 {    
@@ -50,7 +80,7 @@ exports.getClientById = (id, next) =>
             next(thisClient, null);
         }else
         {
-            next(null, 'Client not found.');
+            next(null, generateError());
         }
     });
 }
@@ -80,7 +110,7 @@ exports.getClientByName = (name, next) =>
             next(thisClient, null);
         }else
         {
-            next(null, 'Client not found.');
+            next(null, generateError());
         }
     });
-}
+}*/

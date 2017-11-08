@@ -1,6 +1,42 @@
 'use strict';
 
-var Call = require('./call');
+require('../models/policy');
+
+var mongoose         = require('mongoose'),
+    Policy           = mongoose.model('policy');
+
+mongoose.Promise     = require('bluebird');
+
+exports.insertPolicy = (policy) =>
+{
+    var new_policy = new Policy({
+        _id:                policy.id,
+        amountInsured:      policy.amountInsured,
+        email:              policy.email,
+        inceptionDate:      policy.inceptionDate,
+        installmentPayment: policy.installmentPayment,
+        clientId:           policy.clientId,
+    });           
+
+    new_policy.save();
+};
+
+exports.showPolicy = (id_policy, next) =>
+{
+    Policy.find({'_id': id_policy}, (err, res) => 
+    {
+        if (err)
+        {
+            next(false);
+        }
+        else
+        {
+            next(true);
+        }
+    });
+};
+
+/*var Call = require('./call');
 var ClientService = require('../services/clientService');
 
 function loadPolicies(next) 
@@ -25,6 +61,14 @@ function loadPolicies(next)
 
     });
 };
+
+function generateError(message)
+{
+    var err = new Error();
+    err.status = 404;
+    err.message = message;
+    return err;    
+}
 
 exports.getPolicyByUserName = (name, next) => 
 {    
@@ -58,7 +102,7 @@ exports.getPolicyByUserName = (name, next) =>
                     next(thisPolicies, null);
                 }else
                 {
-                    next(null, 'This name not have associate policies.');
+                    next(null, generateError('This name not have associate policies.'));
                 }
 
             });
@@ -87,7 +131,7 @@ exports.getClientByPoliceId = (policyId, next) =>
 
             if (thisPolicy == null)
             {
-                next(null, 'Policy not found.')
+                next(null, generateError('Policy not found.'));
             }
             else
             {
@@ -104,4 +148,4 @@ exports.getClientByPoliceId = (policyId, next) =>
             }
         }
     });
-}
+}*/
