@@ -9,15 +9,10 @@ adminMiddleware.checkIsAdmin = (req, res, next) =>
         return next();
     } 
     
-    return next(generateError());
-}
-
-function generateError()
-{
-    var err = new Error();
-    err.status = 401;
-    err.message = 'Not authorization'
-    return err;    
+    return res.status(401).json({
+        success: false,
+        message: 'Not Authorization.'
+    });
 }
 
 module.exports = adminMiddleware;

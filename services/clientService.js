@@ -12,22 +12,15 @@ exports.insertClient = (client) =>
 {
     hash.generatePassword(client.name, (password, err) => 
     {
-        if (err)
-        {
-            console.log(err);
-        }
-        else
-        {
-            var new_client = new Client({
-                _id:        client.id,
-                name:       client.name,
-                email:      client.email,
-                password:   password,
-                role:       client.role
-            });           
+        var new_client = new Client({
+            _id:        client.id,
+            name:       client.name,
+            email:      client.email,
+            password:   password,
+            role:       client.role
+        });           
 
-            new_client.save();     
-        }
+        new_client.save();  
     });   
 };
 

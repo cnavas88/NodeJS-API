@@ -42,3 +42,4 @@ Here we will explain how to deploy the project step by step:
 - Mongodb must be installed (The database, collections and datas will be created alone 
   when the project starts)
 - node server.js (Run Project)
+- Access to SWAGGER DOC : http://localhost:3000/api-docs
