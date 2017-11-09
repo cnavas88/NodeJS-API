@@ -5,6 +5,9 @@ var jwtAuthMiddleware   = require('../middleware/jwtAuthMiddleware');
 
 var app = express();
 
+// Add swagger for doc api
+
+
 app.use( jwtAuthMiddleware.jwtAuth );
 
 app.use('/', require('./guest'));

@@ -6,6 +6,14 @@ var ClientService         = require('../services/clientService'),
 
 exports.login = (req, res) => 
 {
+    if (! req.body.name)
+    {
+        return res.status(422).json({
+            success: false,
+            message: 'Authentication failed. The field name is required.'
+        });        
+    }
+
     var condition = {'name': req.body.name};
 
     ClientService.showClient(
@@ -14,15 +22,7 @@ exports.login = (req, res) =>
 
         if (! isNotNull)
         {
-            return res.status(500).json({
-                success: false,
-                message: err
-            });
-        }
-
-        if (!client)
-        {
-            return res.status(422).json({
+            return res.status(404).json({
                 success: false,
                 message: 'Authentication failed. User not found.'
             });

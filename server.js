@@ -1,11 +1,14 @@
 'use strict';
 
-var express     = require('express'),
-    bodyParser  = require('body-parser'),
-    mongoose    = require('mongoose'),
-    inicialize  = require('./seeds/index');
+var express      = require('express'),
+    bodyParser   = require('body-parser'),
+    mongoose     = require('mongoose'),
+    inicialize   = require('./seeds/index');
 
-var app         = express();
+var app          = express();
+
+const swaggerUi       = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 // Configuration
 var urlDatabase = 'mongodb://localhost/test-altran';
@@ -16,6 +19,8 @@ app.use(bodyParser.json());
 
 // Get the URLs
 app.use('/api', require('./routes/index'));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 mongoose.connect(urlDatabase, { useMongoClient: true }, (err, res) => 
 {   

@@ -1,0 +1,335 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Documentation test-altran",
+        "description": "",
+        "version": "1.0.0"
+    },
+    "produces": ["application/json"],
+    "host": "localhost:3000",
+    "basePath": "/api/",
+    "paths": {
+        "/": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "swagTest",
+                "tags": ["/"],
+                "description": "Login in swagger",
+                "parameters": [
+                    {
+                    "in": "body",
+                    "name": "name",
+                    "description": "Client name",
+                    "required": true,
+                    "type": "string"
+                    },
+                    {
+                    "in": "body",
+                    "name": "password",
+                    "description": "Client password",
+                    "required": true,
+                    "type": "string"
+                    }             
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the token authenticate",
+                        "schema": {
+                            "$ref": "#/definitions/success"
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "422": {
+                        "description": "The field name is required",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }, 
+                    "401": {
+                        "description": "Password is Wrong",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }                                       
+                }
+            }
+        },
+        "/clients": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "swagTest",
+                "tags": ["/"],
+                "description": "Get the user with id",
+                "parameters": [
+                    {
+                    "in": "url",
+                    "name": "id",
+                    "description": "Client id",
+                    "required": true,
+                    "type": "string"
+                    }           
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the client",
+                        "schema": {
+                            "$ref": "#/definitions/client"
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed to authenticate token",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }, 
+                    "403": {
+                        "description": "Token not provider",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }                                       
+                }
+            }
+        },
+        "/clients/name/": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "swagTest",
+                "tags": ["/"],
+                "description": "Get the user with name",
+                "parameters": [
+                    {
+                    "in": "url",
+                    "name": "name",
+                    "description": "Client name",
+                    "required": true,
+                    "type": "string"
+                    }           
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the client",
+                        "schema": {
+                            "$ref": "#/definitions/client"
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed to authenticate token",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }, 
+                    "403": {
+                        "description": "Token not provider",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }                                       
+                }
+            }
+        },
+        "/clients/:name/policies": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "swagTest",
+                "tags": ["/"],
+                "description": "Get the policies according client name",
+                "parameters": [
+                    {
+                    "in": "url",
+                    "name": "name",
+                    "description": "policies array return",
+                    "required": true,
+                    "type": "string"
+                    }           
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the policies",
+                        "schema": {
+                            "$ref": "#/definitions/policies"
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed to authenticate token",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }, 
+                    "403": {
+                        "description": "Token not provider",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorization",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }                                                           
+                }
+            }
+        },
+        "/policies/:policyId/client": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "swagTest",
+                "tags": ["/"],
+                "description": "Get the client according policy id",
+                "parameters": [
+                    {
+                    "in": "url",
+                    "name": "policyId",
+                    "description": "Return client",
+                    "required": true,
+                    "type": "string"
+                    }           
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Return the policies",
+                        "schema": {
+                            "$ref": "#/definitions/policies"
+                        }
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "422": {
+                        "description": "Failed to authenticate token",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }, 
+                    "403": {
+                        "description": "Token not provider",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorization",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }                                                           
+                }
+            }
+        }                                                 
+    },
+    "definitions": {
+        "error": {
+            "type": "json",
+            "properties": {
+                "success": {
+                    "type": "boolean",
+                    "value": true
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Token Auth"
+                }
+            }
+        },
+        "success": {
+            "type": "json",
+            "properties": {
+                "success": {
+                    "type": "boolean",
+                    "value": false
+                },
+                "data": {
+                    "type": "string"
+                }
+            }            
+        },
+        "client": {
+            "type": "json",
+            "properties": {
+                "success": {
+                    "type": "boolean",
+                    "value": true
+                },
+                "data": {
+                    "type": "json",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string"
+                        },                                                
+                        "role": {
+                            "type": "string"
+                        }                                                
+                    }
+                }
+            }
+        },
+        "policies": {
+            "type": "json",
+            "properties": {
+                "success": {
+                    "type": "boolean",
+                    "value": true
+                },
+                "data": {
+                    "type": "array",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "amountInsured": {
+                            "type": "float"
+                        },
+                        "inceptionDate": {
+                            "type": "date"
+                        },
+                        "email": {
+                            "type": "string"
+                        },                                                
+                        "installmentPayment": {
+                            "type": "boolean"
+                        },
+                        "clientId": {
+                            "type": "string"
+                        }                                                     
+                    }
+                }
+            }
+        }        
+    }   
+}

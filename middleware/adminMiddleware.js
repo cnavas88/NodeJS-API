@@ -15,7 +15,7 @@ adminMiddleware.checkIsAdmin = (req, res, next) =>
 function generateError()
 {
     var err = new Error();
-    err.status = 403;
+    err.status = 401;
     err.message = 'Not authorization'
     return err;    
 }

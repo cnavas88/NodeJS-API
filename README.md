@@ -31,6 +31,7 @@ Example:
 - mocha": 4.0.1
 - mongoose": 4.13.0
 - morgan": 1.9.0
+- swagger-ui-express: 2.0.9
 
 # Deploy Project
 
