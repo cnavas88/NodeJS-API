@@ -3,7 +3,8 @@
 require('../models/policy');
 
 var mongoose         = require('mongoose'),
-    Policy           = mongoose.model('policy');
+    Policy           = mongoose.model('policy'),
+    ClientService    = require('../services/clientService');
 
 mongoose.Promise     = require('bluebird');
 
@@ -23,129 +24,67 @@ exports.insertPolicy = (policy) =>
 
 exports.showPolicy = (id_policy, next) =>
 {
-    Policy.find({'_id': id_policy}, (err, res) => 
+    Policy.findOne({'_id': id_policy}, (err, res) => 
     {
-        if (res.length == 0)
+        if (! res)
         {
-            next(false);
+            next(null, false);
         }
         else
         {
-            next(true);
+            next(res, true);
         }
     });
 };
-
-/*var Call = require('./call');
-var ClientService = require('../services/clientService');
-
-function loadPolicies(next) 
-{
-    var options = {
-        host: 'www.mocky.io',
-        port: '80',
-        path: '/v2/580891a4100000e8242b75c5',
-        method: 'GET',
-        encoding: null
-    };
-
-    Call.callToService(options, null, (data, err) => {
-
-        if (err)
-        {
-            next(null, err);
-        }else
-        {
-            next(data.policies, null);
-        }
-
-    });
-};
-
-function generateError(message)
-{
-    var err = new Error();
-    err.status = 404;
-    err.message = message;
-    return err;    
-}
 
 exports.getPolicyByUserName = (name, next) => 
-{    
-    loadPolicies( (policies, err) => 
+{   
+    let condition = {'name': name};
+
+    ClientService.showClient(condition, (client, isNotNull) => 
     {
-        if (err)
+        if (! isNotNull)
         {
-            next(null, err);
-        }else
+            next(null, true);
+        } 
+        else
         {
-            ClientService.getClientByName(name, (client, err) => {
-
-                var thisPolicies = [];
-
+            Policy.find({'clientId': client.id}, (err, res) => 
+            {
                 if (err)
                 {
                     next(null, err);
-                } else
-                {
-                    policies.forEach((policy, index, arr) => 
-                    {
-                        if (policy.clientId == client.id)
-                        {
-                            thisPolicies.push(policy);
-                        }
-                    });
                 }
-
-                if (thisPolicies.length > 0)
+                else
                 {
-                    next(thisPolicies, null);
-                }else
-                {
-                    next(null, generateError('This name not have associate policies.'));
+                    next(res, null);
                 }
-
             });
         }
     });
 }
 
 exports.getClientByPoliceId = (policyId, next) => 
-{   
-    loadPolicies( (policies, err) => 
+{
+    this.showPolicy({'_id': policyId}, (policy, isNotNull) => 
     {
-        var thisPolicy = null;
-
-        if (err)
+        if (! isNotNull)
         {
-            next(null, err);
-        }else
+            next(null, true);
+        }
+        else
         {
-            policies.forEach((policy, index, arr) => 
+            ClientService.showClient({'_id': policy.clientId}, (client, isNotNull) => 
             {
-                if (policy.id == policyId)
+                if (! isNotNull)
                 {
-                    thisPolicy = policy;
+                    next(null, true);
+                } 
+                else
+                {
+                    next(client, false);
                 }
             });
-
-            if (thisPolicy == null)
-            {
-                next(null, generateError('Policy not found.'));
-            }
-            else
-            {
-                ClientService.getClientById(thisPolicy.clientId, (client, err) => 
-                {
-                    if (err)
-                    {
-                        next(null, err);
-                    } else
-                    {
-                        next(client, null);
-                    }
-                });
-            }
         }
     });
-}*/
+}

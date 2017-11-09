@@ -11,20 +11,20 @@ app.use('/', require('./guest'));
 app.use('/', require('./auth'));
 app.use('/', require('./admin'));
 
-app.all('*', (req, res, next) => 
+app.all('*', (req, res) => 
 {
-    var err = new Error();
-    err.status = 404;
-    err.message = 'Resource Not found';
-    next(err);
+    res.status(404).json({
+        success: false,
+        message: 'ERROR: Resource not found.'
+    });
 });
 
-app.use( (err, req, res, next) => 
+/*app.use( (err, req, res, next) => 
 {
     res.status(err.status).json({
         success: false,
         message: err.message
     });
-});
+});*/
 
 module.exports = app;

@@ -10,7 +10,7 @@ exports.findPoliciesByName = (req, res) =>
         {
             res.status(404).json({
                 success: false,
-                message: err
+                message: 'ERROR: Policies not found.'
             });
         }else
         {
@@ -30,7 +30,7 @@ exports.findClientsByPoliceId = (req, res) =>
         {
             res.status(404).json({
                 success: false,
-                message: err
+                message: 'ERROR: Policies not found.'
             });
         }else
         {

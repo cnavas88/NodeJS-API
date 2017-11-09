@@ -35,7 +35,7 @@ exports.showClient = (condition, next) =>
 {
     Client.findOne(condition, (err, res) => 
     {
-        if (res.length == 0)
+        if (! res)
         {
             next(null, false);
         }
@@ -45,66 +45,3 @@ exports.showClient = (condition, next) =>
         }
     });
 };
-/*
-
-function generateError()
-{
-    var err = new Error();
-    err.status = 404;
-    err.message = 'Client not found.';
-    return err;    
-}
-
-exports.getClientById = (id, next) => 
-{    
-        var thisClient = null;
-
-        if (err)
-        {
-            next(null, err);
-        }else
-        {
-            clients.forEach((client, index, arr) => 
-            {
-                if (client.id == id)
-                {
-                    thisClient = client;
-                }
-            });
-        }
-
-        if (thisClient)
-        {
-            next(thisClient, null);
-        }else
-        {
-            next(null, generateError());
-        }
-}
-
-exports.getClientByName = (name, next) => 
-{    
-        var thisClient = null;
-
-        if (err)
-        {
-            next(null, err);
-        }else
-        {
-            clients.forEach((client, index, arr) => 
-            {
-                if (client.name == name)
-                {
-                    thisClient = client;
-                }
-            });
-        }
-
-        if (thisClient)
-        {
-            next(thisClient, null);
-        }else
-        {
-            next(null, generateError());
-        }
-}*/

@@ -4,11 +4,16 @@ var ClientService = require('../services/clientService');
 
 exports.findClientsById = (req, res, next) => 
 {
-    ClientService.getClientById(req.params.id, (client, err) => 
+    let condition = {'_id': req.params.id};
+
+    ClientService.showClient(condition, (client, isNotNull) => 
     {
-        if (err)
+        if (! isNotNull)
         {
-            next(err);
+            res.status(404).json({
+                success: false,
+                data: 'ERROR: Client Not Found.'                
+            });
         }else
         {
             res.json({
@@ -21,17 +26,22 @@ exports.findClientsById = (req, res, next) =>
 
 exports.findClientsByName = (req, res, next) => 
 {
-    ClientService.getClientByName(req.params.name, (client, err) => 
+    let condition = {'name': req.params.name};
+
+    ClientService.showClient(condition, (client, isNotNull) => 
     {
-        if (err)
+        if (! isNotNull)
         {
-            next(err);
+            res.status(404).json({
+                success: false,
+                data: 'ERROR: Client Not Found.'                
+            });
         }else
         {
             res.json({
                 success: true,
-                data: client
+                data: client                
             });
-        }        
+        }          
     });
 };
