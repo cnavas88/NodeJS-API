@@ -1,7 +1,8 @@
 'use strict';
 
-var ClientService   = require('../services/clientService');
-var authenticationService = require('../services/authentication');
+var ClientService         = require('../services/clientService'),
+    hash                  = require('../services/password'),
+    authenticationService = require('../services/authentication');
 
 exports.login = (req, res) => 
 {
@@ -9,9 +10,9 @@ exports.login = (req, res) =>
 
     ClientService.showClient(
         condition
-    , (client, err) => {
+    , (client, isNotNull) => {
 
-        if (err)
+        if (! isNotNull)
         {
             return res.status(500).json({
                 success: false,
@@ -25,9 +26,9 @@ exports.login = (req, res) =>
                 success: false,
                 message: 'Authentication failed. User not found.'
             });
-        } 
-
-        if (client.password != req.body.password) // TODO - CREAR EL COMPARE EN EL SERVICIO DEL PASSWORD
+        }
+        
+        if (!req.body.password || !hash.comparePassword(client.password, req.body.password))
         {
             return res.status(401).json({
                 success: false,

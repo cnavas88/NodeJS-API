@@ -33,7 +33,7 @@ exports.insertClient = (client) =>
 
 exports.showClient = (condition, next) =>
 {
-    Client.find(condition, (err, res) => 
+    Client.findOne(condition, (err, res) => 
     {
         if (res.length == 0)
         {

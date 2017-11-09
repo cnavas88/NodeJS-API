@@ -21,4 +21,16 @@ password.generatePassword = (key, next) =>
           });
 };
 
+password.comparePassword = (hash, password_user) =>
+{
+      if (bcrypt.compareSync(password_user, hash)) 
+      {
+            return true;
+      } 
+      else 
+      {
+            return false;
+      }      
+}
+
 module.exports = password;
