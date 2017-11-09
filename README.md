@@ -2,7 +2,7 @@
 
 ## Author
 
-Carlos Navas Buzón (dante.manaics@gmail.com)
+Carlos Navas Buzón (dante.maniacs@gmail.com)
 
 ## Version
 
