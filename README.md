@@ -26,12 +26,14 @@ Example:
 
 - bcrypt: 1.0.3
 - body-parser: 1.5.1
-- express": 4.16.2
-- jsonwebtoken": 8.1.0
-- mocha": 4.0.1
-- mongoose": 4.13.0
-- morgan": 1.9.0
+- express: 4.16.2
+- jsonwebtoken: 8.1.0
+- mocha: 4.0.1
+- mongoose: 4.13.0
+- morgan: 1.9.0
 - swagger-ui-express: 2.0.9
+- chai: 4.1.2
+- chai-http: 3.0.0
 
 # Deploy Project
 
@@ -43,3 +45,7 @@ Here we will explain how to deploy the project step by step:
   when the project starts)
 - node server.js (Run Project)
 - Access to SWAGGER DOC : http://localhost:3000/api-docs
+
+# run tests
+
+- in the root folder execute: npm test
