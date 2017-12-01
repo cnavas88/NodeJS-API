@@ -1,5 +1,4 @@
-# Test-Altran-backend
-
+# API with nodejs
 ## Author
 
 Carlos Navas Buzón (dante.maniacs@gmail.com)
@@ -10,7 +9,7 @@ Carlos Navas Buzón (dante.maniacs@gmail.com)
 
 ## Description
 
-Level test for altran, consists of an API made in nodejs, the express minimalist 
+Consists of an API made in nodejs, the express minimalist 
 framework has been chosen to carry it out. The data will be saved in a database 
 in MongoDB. The data will be inserted automatically at the start of the project, 
 checking that they were not before. A password is created to be able to login through 
@@ -19,8 +18,8 @@ client name + 1234.
 
 Example:
 
-- client name: Carlos
-- password: Carlos1234
+- client name: Johnny
+- password: Johnny1234
 
 ## Dependencies
 
